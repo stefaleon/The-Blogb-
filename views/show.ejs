@@ -5,9 +5,8 @@
 			<div class="ui right aligned grid">
 				<div class="sixteen wide column">
     				<div class="ui segment">    					
-      					<a href="/posts/<%= post._id %>/edit"> 
-							Edit this post
-							<i class="write square icon emother"></i>		
+      					<a href="/posts/<%= post._id %>/edit">					
+							<button class="ui blue basic button"><i class="write square icon emother"></i>Edit this post</button>	
 						</a>
       				</div>
 				</div>
@@ -19,9 +18,27 @@
 			</div>
 			<hr />
 			
-				<p><img src="<%= post.image %>" /></p>
-				<p><span> <%= post.created.toUTCString() %> </span></p>
-				<p> <%- post.content %> </p>
+			<p><img src="<%= post.image %>" /></p>
+			<p> <%= post.created.toUTCString() %> </p>
+			<p> <%- post.content %> </p>
+
+			<br />
+
+			<div class="ui right aligned grid">
+				<div class="sixteen wide column">
+    				<div class="ui segment">      					
+
+						<form class="ui form" action="/posts/<%= post._id %>?_method=DELETE" method="POST">					
+							<button class="ui red basic button"><i class="warning circle icon emother"></i>Delete this post</button>	
+						</form>
+
+					</div>
+				</div>
+			</div>
+
+
+
+
 			
 		</div> <!-- container --> 
 

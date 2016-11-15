@@ -114,6 +114,17 @@ app.put('/posts/:id', function(req, res) {
 	});
 });
 
+// DESTROY ROUTE
+app.delete('/posts/:id', function(req, res) {
+	Post.findByIdAndRemove(req.params.id, function(err, updatedPost) {
+	 	if (err) {
+			res.redirect('/posts');
+	 	} else {
+	 		res.redirect('/posts');				
+	 	}
+	});
+});
+
 app.listen(PORT, process.env.IP, function() {
 	console.log('Server started on port', PORT);
 });
