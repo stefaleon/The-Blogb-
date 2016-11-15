@@ -2,13 +2,20 @@
 
 		<div class="ui main text container segment" id="content">
 
+			<div class="ui right aligned grid">
+				<div class="sixteen wide column">
+    				<div class="ui segment">    					
+      					<a href="/posts/<%= post._id %>/edit"> 
+							Edit this post
+							<i class="write square icon emother"></i>		
+						</a>
+      				</div>
+				</div>
+			</div>
+
+
 			<div class="ui large header">
 				<%= post.title %>
-				<span>
-					<a href="/posts/<%= post._id %>/edit">
-					<i class="write square icon emother"></i>		
-					Edit</a>
-				</span>
 			</div>
 			<hr />
 			

@@ -3,13 +3,13 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var methodOverride = require('method-override');
 
 mongoose.connect('mongodb://localhost/restful_blog_app');
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
+app.use(bodyParser.urlencoded({	extended: true }));
+app.use(methodOverride('_method'));
 
 var postSchema = new mongoose.Schema({
 	title: String,
@@ -97,6 +97,22 @@ app.get('/posts/:id/edit', function(req, res) {
 	});			
 });
 
+// UPDATE ROUTE
+app.put('/posts/:id', function(req, res) {
+	var updPost = {
+		title: req.body.title,
+		image: req.body.image,
+		content: req.body.content,
+		updated: Date.now
+	}
+	Post.findByIdAndUpdate(req.params.id, updPost, function(err, updatedPost) {
+		if (err) {
+			res.redirect('/posts');
+		} else {
+			res.redirect('/posts/' + req.params.id);				
+		}
+	});
+});
 
 app.listen(PORT, process.env.IP, function() {
 	console.log('Server started on port', PORT);
