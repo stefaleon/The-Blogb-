@@ -18,6 +18,10 @@ img {
 	width: 450px;
 }
 
+#delete {
+	display: inline;
+}
+
 footer {
 	margin: 20px 0; 
 	text-align: center;

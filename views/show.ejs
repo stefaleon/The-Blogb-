@@ -2,16 +2,6 @@
 
 		<div class="ui main text container segment" id="content">
 
-			<div class="ui right aligned grid">
-				<div class="sixteen wide column">
-    				<div class="ui segment">    					
-      					<a href="/posts/<%= post._id %>/edit">					
-							<button class="ui blue basic button"><i class="write square icon emother"></i>Edit this post</button>	
-						</a>
-      				</div>
-				</div>
-			</div>
-
 
 			<div class="ui large header">
 				<%= post.title %>
@@ -26,17 +16,18 @@
 
 			<div class="ui right aligned grid">
 				<div class="sixteen wide column">
-    				<div class="ui segment">      					
+    				<div class="ui segment">      	
+    					<a href="/posts/<%= post._id %>/edit">					
+							<button class="ui blue basic button"><i class="write square icon emother"></i>Edit this post</button>	
+						</a>				
 
-						<form class="ui form" action="/posts/<%= post._id %>?_method=DELETE" method="POST">					
+						<form id="delete" class="ui form" action="/posts/<%= post._id %>?_method=DELETE" method="POST">					
 							<button class="ui red basic button"><i class="warning circle icon emother"></i>Delete this post</button>	
 						</form>
 
 					</div>
 				</div>
 			</div>
-
-
 
 
 			
