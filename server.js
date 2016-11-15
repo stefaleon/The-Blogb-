@@ -17,7 +17,7 @@ var postSchema = new mongoose.Schema({
 		type: String,
 		default: 'https://lh3.googleusercontent.com/MgwXHyJOYqAAIHi6dYjKEqPSs_8-ming4v4kg2tM7DityTvSfgtm-s-NEHvQnr5GSQNFKRaCCKocK6Kc8U3GcGl4fEb2DlrxCvV8LJiB7bKAspE5PrqlENGu5m_CnzDeuVNDW_Zwb_8SFRQwK8dK3zbvpgHkX1KXOLdvsS_HOefFix5jsfByghSxxpzgxsRnKWaoRutP5i2BH515SYhC9l6YkxEUCp0Uvz1fO5V0oAWBq5BdVilqYrMxj1232Lu62cmEx4I7LzLSGKeN_EwXbaqoX0WVakjJqob0RfiJvIAegBKjkzsk5R6JTlehUHQA-K5BYgxuT-SuMb-YN1pHTBjlhEkxNlQnlIeCAH33BS_PqNE66_DWCjrSEPOvMtiRn1vUU8Fd_AY_F7y8y3paPfTLmMIzatE8_DmN0-050s7Pfreyp8zLwL_-eLvK60h-p7Cuv-Fcgw7-N_koNaacCQtbKC1Ej2Q1TIKxU11_B-eray2L_L84yAhpMhmtkxBZJCS8ZJ00S7XKoqyR2xn-YHmyeixkx7EDb_keq8grBIoFlCoTrGuYE5lcVi1fjk5CfBJvltHFLfVDn61mLo22bQjUBrc1b6EiueSjklpAPcK-oTt2=w640-h572-no'
 	},
-	body: String,
+	content: String,
 	created: {
 		type: Date,
 		default: Date.now
@@ -29,7 +29,7 @@ var Post = mongoose.model('Post', postSchema);
 // Post.create({
 // 	title: 'MOTORHEAD',
 // 	image: 'https://i.ytimg.com/vi/vTsa6JTCVaU/maxresdefault.jpg',
-// 	body: "Sunrise, wrong side of another day, Sky high and six thousand miles away, Don't know how long I've been awake, Wound up in an amazing state, Can't get enough, And you know it's righteous stuff, Goes up like prices at Christmas, Motorhead, you can call me Motorhead, alright"
+// 	content: "Sunrise, wrong side of another day, Sky high and six thousand miles away, Don't know how long I've been awake, Wound up in an amazing state, Can't get enough, And you know it's righteous stuff, Goes up like prices at Christmas, Motorhead, you can call me Motorhead, alright"
 // });
 
 
@@ -43,9 +43,11 @@ app.get('/posts', function(req, res) {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render('index', { posts: foundPosts} );
+			res.render('index', {
+				posts: foundPosts
+			});
 		}
-	});	
+	}).sort( { created: -1 } );
 });
 
 // NEW ROUTE
@@ -55,14 +57,46 @@ app.get('/posts/new', function(req, res) {
 
 // CREATE ROUTE
 app.post('/posts', function(req, res) {
-	Post.create(req.body.post, function (err, newPost) {
-		if(err) {
+	var crPost = {
+		title: req.body.title,
+		image: req.body.image || 'https://lh3.googleusercontent.com/MgwXHyJOYqAAIHi6dYjKEqPSs_8-ming4v4kg2tM7DityTvSfgtm-s-NEHvQnr5GSQNFKRaCCKocK6Kc8U3GcGl4fEb2DlrxCvV8LJiB7bKAspE5PrqlENGu5m_CnzDeuVNDW_Zwb_8SFRQwK8dK3zbvpgHkX1KXOLdvsS_HOefFix5jsfByghSxxpzgxsRnKWaoRutP5i2BH515SYhC9l6YkxEUCp0Uvz1fO5V0oAWBq5BdVilqYrMxj1232Lu62cmEx4I7LzLSGKeN_EwXbaqoX0WVakjJqob0RfiJvIAegBKjkzsk5R6JTlehUHQA-K5BYgxuT-SuMb-YN1pHTBjlhEkxNlQnlIeCAH33BS_PqNE66_DWCjrSEPOvMtiRn1vUU8Fd_AY_F7y8y3paPfTLmMIzatE8_DmN0-050s7Pfreyp8zLwL_-eLvK60h-p7Cuv-Fcgw7-N_koNaacCQtbKC1Ej2Q1TIKxU11_B-eray2L_L84yAhpMhmtkxBZJCS8ZJ00S7XKoqyR2xn-YHmyeixkx7EDb_keq8grBIoFlCoTrGuYE5lcVi1fjk5CfBJvltHFLfVDn61mLo22bQjUBrc1b6EiueSjklpAPcK-oTt2=w640-h572-no',
+		content: req.body.content
+	}
+	Post.create(crPost, function(err, newPost) {
+		if (err) {
 			res.render('new');
 		} else {
 			res.redirect('posts');
-		}	
+		}
 	});
 });
+
+// SHOW ROUTE
+app.get('/posts/:id', function(req, res) {
+	Post.findById(req.params.id, function(err, foundPost) {
+		if (err) {
+			res.redirect('/posts');
+		} else {
+			res.render('show', {
+				post: foundPost
+			});
+		}
+	});
+});
+
+// EDIT ROUTE
+app.get('/posts/:id/edit', function(req, res) {
+	Post.findById(req.params.id, function(err, foundPost) {
+		if (err) {
+			res.redirect('/posts');
+		} else {
+			res.render('edit', { 
+				post: foundPost
+			});
+		}
+	});			
+});
+
 
 app.listen(PORT, process.env.IP, function() {
 	console.log('Server started on port', PORT);

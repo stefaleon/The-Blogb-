@@ -1,0 +1,21 @@
+<% include ./partials/header %>
+
+		<div class="ui main text container segment" id="content">
+
+			<div class="ui large header">
+				<%= post.title %>
+				<span>
+					<a href="/posts/<%= post._id %>/edit">
+					<i class="write square icon emother"></i>		
+					Edit</a>
+				</span>
+			</div>
+			<hr />
+			
+				<p><img src="<%= post.image %>" /></p>
+				<p><span> <%= post.created.toUTCString() %> </span></p>
+				<p> <%- post.content %> </p>
+			
+		</div> <!-- container --> 
+
+<% include ./partials/footer %>

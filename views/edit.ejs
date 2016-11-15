@@ -2,20 +2,20 @@
 
 		<div class="ui main text container segment" id="content">
 
-			<div>New Post <i class="write icon emother"></i></div>
+			<div>Edit "<%= post.title %>" <i class="write icon emother"></i></div>
 			<hr />
 			<form class="ui form" action="/posts" method="POST">
 				<div class="field">
 					<label>Title<label>
-					<input type="text" name="title" placeholder="title" />
+					<input type="text" name="title" value="<%= post.title %>" />
 				</div>
 				<div class="field">
 					<label>Image<label>
-					<input type="text" name="image" placeholder="image" />
+					<input type="text" name="image" value="<%= post.image %>" />
 				</div>
 				<div class="field">
 					<label>Content<label>
-					<textarea name="content"></textarea>	
+					<textarea name="content"><%= post.content %></textarea>	
 				</div>			
 				<button class="ui basic button"><i class="checkmark box icon emother"></i>Submit</button>	
 			</form>

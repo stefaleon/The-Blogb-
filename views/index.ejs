@@ -6,8 +6,9 @@
 				<hr />
 				<h2> <%= post.title %> </h2>
 				<p><img src="<%= post.image %>" /></p>
-				<p><span> <%= post.created %> </span></p>
-				<p> <%= post.body %> </p>
+				<p><span> <%= post.created.toUTCString() %> </span></p>
+				<p> <%= post.content.substring(0, 400) %> </p>
+				<a href="/posts/<%= post._id %>">Read More</a>
 			<% }); %>
 
 			

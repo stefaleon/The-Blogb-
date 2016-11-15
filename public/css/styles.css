@@ -6,8 +6,12 @@
 	margin-top: 6em;
 }
 
-i.icon {
+i.icon.em2 {
 	font-size: 2em;
+}
+
+i.icon.emother {
+	font-size: 1.2em;
 }
 
 img {
